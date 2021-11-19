@@ -37,6 +37,7 @@ add_library(SFKJ
         utils/multicom.cpp
         Purify/PurificationCircuit.cpp
         sort/sort.cpp
+        relation/test.cpp
         )
         
 set_target_properties(SFKJ
@@ -86,5 +87,11 @@ set_target_properties(demo
 add_executable(puri puridemo.cpp)
 target_link_libraries(puri PUBLIC SFKJ)
 set_target_properties(puri
+    PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+add_executable(relatest relation/test.cpp)
+target_link_libraries(relatest PUBLIC psi_analytics_eurocrypt19)
+set_target_properties(relatest
     PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
