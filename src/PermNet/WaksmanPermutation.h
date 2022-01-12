@@ -92,6 +92,9 @@ public:
 		m_vSwitchGateProgram.resize(estimateGates(size));
 		wm = new WaksmanPermutation(size, this);
 	}
+	~PermutationNetwork() {
+		delete wm;
+	}
 
 	uint32_t nextGate() {
 		return gatebuildcounter++;
