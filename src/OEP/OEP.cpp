@@ -376,7 +376,7 @@ void OEPClient(std::vector< std::vector<uint32_t> > weights, std::vector< std::v
     cout << "OEPClient: start EstablishConnection 1st sock recv" << endl;
     auto sock = EstablishConnection(context.address, context.port, static_cast<e_role>(context.role));
     // cout << "OEPClient: M=" << M << endl;
-    usleep(10);
+    usleep(1000);
     size_t rec_num = sock->Receive(&M, sizeof(uint32_t));
     cout << "OEPClient: sock->Receive  M=" << M << " rec_num=" << rec_num << endl;
     sock->Close();
