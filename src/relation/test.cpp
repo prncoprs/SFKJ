@@ -125,6 +125,7 @@ int main(int argc, char **argv) {
         B.SetTags(bt0);
     }
 
+    cout << "Start Join ..." << endl;
     A.Join(B, C, AID, BID, config);
 
     CheckPhase(C.getTables(), C.getTags(), config);

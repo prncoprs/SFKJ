@@ -239,6 +239,8 @@ size_t CSocket::Receive(void* buf, size_t bytes) {
 	boost::system::error_code ec;
 	auto bytes_transferred =
 		boost::asio::read(impl_->socket, boost::asio::buffer(buf, bytes), ec);
+
+	// std::cout << "CSocket::Receive  bytes_transferred=" << bytes_transferred << std::endl; 
 	if (ec && verbose_) {
 		std::cerr << "read failed: " << ec.message() << "\n";
 	}
@@ -253,6 +255,7 @@ size_t CSocket::Send(const void* buf, size_t bytes) {
 	boost::system::error_code ec;
 	auto bytes_transferred =
 		boost::asio::write(impl_->socket, boost::asio::buffer(buf, bytes), ec);
+	// std::cout << "CSocket::Send  bytes_transferred=" << bytes_transferred << std::endl; 
 	if (ec && verbose_) {
 		std::cerr << "write failed: " << ec.message() << "\n";
 	}
