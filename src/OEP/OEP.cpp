@@ -208,8 +208,8 @@ void OEPServer(std::vector< uint32_t > indices, std::vector< std::vector<uint32_
     M = indices.size();
     // communicate output size
     cout << "OEPServer: oep start EstablishConnection 1st send" << endl;
-    usleep(1000);
-    auto sock = EstablishConnection(context.address, context.port, static_cast<e_role>(context.role));
+    // usleep(1000);
+    auto sock = EstablishConnection(context.address, context.port + 1, static_cast<e_role>(context.role));
     cout << "OEPServer: sock->Send:  M=" << M  << endl;
     sock->Send(&M, sizeof(uint32_t));
     sock->Close();
@@ -376,8 +376,8 @@ void OEPClient(std::vector< std::vector<uint32_t> > weights, std::vector< std::v
     weightcnt = weights[0].size();
     // communicate output size
     cout << "OEPClient: start EstablishConnection 1st sock recv" << endl;
-    usleep(1000);
-    auto sock = EstablishConnection(context.address, context.port, static_cast<e_role>(context.role));
+    // usleep(1000);
+    auto sock = EstablishConnection(context.address, context.port + 1, static_cast<e_role>(context.role));
     // cout << "OEPClient: M=" << M << endl;
     // usleep(1000);
     size_t rec_num = sock->Receive(&M, sizeof(uint32_t));
