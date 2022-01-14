@@ -20,7 +20,6 @@
 #include "abycore/sharing/boolsharing.h"
 #include "abycore/sharing/sharing.h"
 #include <vector>
-#include <unistd.h>
 
 using namespace osuCrypto;
 
@@ -207,20 +206,17 @@ void OEPServer(std::vector< uint32_t > indices, std::vector< std::vector<uint32_
     uint32_t N, M, weightcnt;
     M = indices.size();
     // communicate output size
-    cout << "OEPServer: oep start EstablishConnection 1st send" << endl;
-    // usleep(1000);
+    // cout << "OEPServer: oep start EstablishConnection 1st send" << endl;
     auto sock = EstablishConnection(context.address, context.port + 1, static_cast<e_role>(context.role));
-    cout << "OEPServer: sock->Send:  M=" << M  << endl;
+    // cout << "OEPServer: sock->Send:  M=" << M  << endl;
     sock->Send(&M, sizeof(uint32_t));
     sock->Close();
-    // cout << "OEPServer: sock->Close() " << endl;
-    cout << "OEPServer: oep start EstablishConnection 2nd recv" << endl;
-    // usleep(1000);
+    // cout << "OEPServer: oep start EstablishConnection 2nd recv" << endl;
     sock = EstablishConnection(context.address, context.port, static_cast<e_role>(context.role));
     sock->Receive(&N, sizeof(uint32_t));
     sock->Receive(&weightcnt, sizeof(uint32_t));
     sock->Close();
-    cout << "OEPServer: oep size N=" << N << " M=" << M << " weightcnt=" << weightcnt << endl;
+    // cout << "OEPServer: oep size N=" << N << " M=" << M << " weightcnt=" << weightcnt << endl;
     uint32_t oriM = M;
     if (M < N) {
         M = N;
@@ -375,20 +371,18 @@ void OEPClient(std::vector< std::vector<uint32_t> > weights, std::vector< std::v
     N = weights.size();
     weightcnt = weights[0].size();
     // communicate output size
-    cout << "OEPClient: start EstablishConnection 1st sock recv" << endl;
-    // usleep(1000);
+    // cout << "OEPClient: start EstablishConnection 1st sock recv" << endl;
     auto sock = EstablishConnection(context.address, context.port + 1, static_cast<e_role>(context.role));
     // cout << "OEPClient: M=" << M << endl;
-    // usleep(1000);
     size_t rec_num = sock->Receive(&M, sizeof(uint32_t));
-    cout << "OEPClient: sock->Receive  M=" << M << " rec_num=" << rec_num << endl;
+    // cout << "OEPClient: sock->Receive  M=" << M << " rec_num=" << rec_num << endl;
     sock->Close();
-    cout << "OEPClient: start EstablishConnection 2nd sock send" << endl;
+    // cout << "OEPClient: start EstablishConnection 2nd sock send" << endl;
     sock = EstablishConnection(context.address, context.port, static_cast<e_role>(context.role));
     sock->Send(&N, sizeof(uint32_t));
     sock->Send(&weightcnt, sizeof(uint32_t));
     sock->Close();
-    cout << "OEPClient: oep size  N=" << N << " M=" << M << " weightcnt=" << weightcnt << endl;
+    // cout << "OEPClient: oep size  N=" << N << " M=" << M << " weightcnt=" << weightcnt << endl;
     uint32_t oriM = M;
     if (M < N) {
         M = N;
