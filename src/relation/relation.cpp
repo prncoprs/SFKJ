@@ -19,11 +19,9 @@ void Relation::Join(Relation B, Relation &C, uint32_t AID, uint32_t BID, ENCRYPT
 
         if (Aowner == config.role) { // role == SERVER
             roleconfig.role = SERVER;
-            cout << "Start SharedJoinWithTagServer ..." << endl;
             SharedJoinWithTagServer({AID}, tableA, tableB, B.getTags(), tableC, Ctags, roleconfig);
         } else { // role == CLIENT
             roleconfig.role = CLIENT;
-            cout << "Start SharedJoinWithTagClient ..." << endl;
             SharedJoinWithTagClient({BID}, tableB, tableA, B.getTags(), tableC, Ctags, roleconfig);
         }
         C.SetOwner(_owner);

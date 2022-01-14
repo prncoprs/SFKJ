@@ -556,13 +556,13 @@ namespace ENCRYPTO {
         sock->Close();
         uint64_t outputattributes = svrattributes + cliattributes;
 
-        cout << "communicate round finished " << outputsize << ' ' << outputattributes << endl;
+        // cout << "communicate round finished " << outputsize << ' ' << outputattributes << endl;
 
         std::vector<std::vector<uint32_t>> tempweights;
         std::vector<bool> tempequaltags;
         std::vector<int32_t> orders;
 
-        cout << "SharedJoinWithTagServer PSI phase" << endl;
+        // cout << "PSI phase" << endl;
 
         tempweights.resize(Btuples.size());
         for (auto i=0; i<Btuples.size(); ++i) {
@@ -583,7 +583,7 @@ namespace ENCRYPTO {
         MergeTags(tmpeqtags, tempbtags, tempequaltags, rolecontext);
 
     // OEP with correct lines
-    cout << "SharedJoinWithTagServer oep phase" << endl;
+    // cout << "oep phase" << endl;
         vector<uint32_t> invorders(orders.size());
         for (auto i=0; i<orders.size(); ++i) {
             if (orders[i] != -1) {
@@ -605,7 +605,7 @@ namespace ENCRYPTO {
         vector<vector<uint32_t>> oeptagresults;
 
         OEPServer(oepindices, oepresults, rolecontext, S_ARITH);
-        cout << "SharedJoinWithTagServer oep tag server" << endl;
+        // cout << "oep tag server" << endl;
         OEPServer(oepindices, oeptagresults, rolecontext, S_BOOL);
 
         for (auto i=0; i<outputsize; ++i) {
@@ -623,7 +623,6 @@ namespace ENCRYPTO {
         // }
 
     // connect two tables
-    cout << "SharedJoinWithTagServer connect two tables " << endl;
         outputs.resize(outputsize);
         equaltags.resize(outputsize);
         for (auto i=0; i<outputsize; ++i) {
@@ -661,7 +660,7 @@ namespace ENCRYPTO {
         uint64_t outputsize = 0;
         uint64_t svrattributes = 0;
         uint64_t cliattributes = Btuples[0].size();
-        cout << "establish connection   " << context.address << ':' << context.port << ' ' << rolecontext.role << endl;
+        // cout << "establish connection   " << context.address << ':' << context.port << ' ' << rolecontext.role << endl;
         auto sock = EstablishConnection(context.address, context.port, static_cast<e_role>(rolecontext.role));
         sock->Receive(&outputsize, sizeof(uint64_t));
         sock->Receive(&svrattributes, sizeof(uint64_t));
@@ -669,7 +668,7 @@ namespace ENCRYPTO {
         sock->Close();
         uint64_t outputattributes = svrattributes + cliattributes;
 
-        cout << "communicate round finished " << outputsize << ' ' << outputattributes << endl;
+        // cout << "communicate round finished " << outputsize << ' ' << outputattributes << endl;
 
         std::vector<std::vector<uint32_t>> tempweights;
         std::vector<bool> tempequaltags;
@@ -682,9 +681,7 @@ namespace ENCRYPTO {
         }
 
     // PSI
-        cout << "SharedJoinWithTagClient psi phase " << endl;
         std::vector<int32_t> orders;
-        // cout << "SharedJoinWithTagClient psi phase PSIsharedpayload " << endl;
         PSIsharedpayload(joinkey, tempweights, rolecontext, orders, tempequaltags);
 
         vector<bool> tempbtags(tempweights.size());
@@ -694,7 +691,6 @@ namespace ENCRYPTO {
         }
 
         vector<bool> tmpeqtags = tempequaltags;
-        // cout << "SharedJoinWithTagClient psi phase MergeTags " << endl;
         MergeTags(tmpeqtags, tempbtags, tempequaltags, rolecontext);
 
         oepeqtags.resize(tempequaltags.size());
@@ -704,7 +700,7 @@ namespace ENCRYPTO {
         }
 
     // OEP
-        cout << "SharedJoinWithTagClient oep phase" << endl;
+    // cout << "oep phase" << endl;
         vector<vector<uint32_t>> oepresults, oeptagresults;
         OEPClient(tempweights, oepresults, rolecontext, S_ARITH);
         OEPClient(oepeqtags, oeptagresults, rolecontext, S_BOOL);
@@ -718,7 +714,6 @@ namespace ENCRYPTO {
         // }
 
     // connect two tables
-        // cout << "SharedJoinWithTagClient connect two tables" << endl;
         outputs.resize(outputsize);
         equaltags.resize(outputsize);
         for (auto i=0; i<outputsize; ++i) {
@@ -762,7 +757,7 @@ namespace ENCRYPTO {
         uint64_t outputsize = Atuples.size();
         uint64_t svrattributes = Atuples[0].size();
         uint64_t cliattributes = 0;
-        cout << "establish connection   " << context.address << ':' << context.port << ' ' << rolecontext.role << endl;
+        // cout << "establish connection   " << context.address << ':' << context.port << ' ' << rolecontext.role << endl;
         auto sock = EstablishConnection(context.address, context.port, static_cast<e_role>(rolecontext.role));
         sock->Send(&outputsize, sizeof(uint64_t));
         sock->Send(&svrattributes, sizeof(uint64_t));
@@ -770,13 +765,13 @@ namespace ENCRYPTO {
         sock->Close();
         uint64_t outputattributes = svrattributes + cliattributes;
 
-        cout << "communicate round finished " << outputsize << ' ' << outputattributes << endl;
+        // cout << "communicate round finished " << outputsize << ' ' << outputattributes << endl;
 
         std::vector<std::vector<uint32_t>> tempweights;
         std::vector<bool> tempequaltags;
         std::vector<int32_t> orders;
 
-        cout << "SharedJoinWithTagServer PSI phase" << endl;
+        // cout << "PSI phase" << endl;
 
         tempweights.resize(Btuples.size());
         for (auto i=0; i<Btuples.size(); ++i) {
@@ -790,7 +785,7 @@ namespace ENCRYPTO {
         PSIsharedpayload(sortedjoinkey, tempweights, rolecontext, orders, perm, tempequaltags);
 
     // OEP with correct lines
-    cout << "SharedJoinWithTagServer oep phase" << endl;
+    // cout << "oep phase" << endl;
         vector<uint32_t> invorders(orders.size());
         for (auto i=0; i<orders.size(); ++i) {
             if (orders[i] != -1) {
@@ -810,7 +805,7 @@ namespace ENCRYPTO {
         vector<vector<uint32_t>> oeptagresults;
 
         OEPServer(oepindices, oepresults, rolecontext, S_ARITH);
-        // cout << "SharedJoinWithTagServer oep tag server" << endl;
+        // cout << "oep tag server" << endl;
         OEPServer(oepindices, oeptagresults, rolecontext, S_BOOL);
 
         for (auto i=0; i<outputsize; ++i) {
@@ -837,7 +832,6 @@ namespace ENCRYPTO {
         // }
 
     // connect two tables
-    // cout << "connect two tables" << endl;
         outputs.resize(outputsize);
         equaltags.resize(outputsize);
         Btags.resize(outputsize);

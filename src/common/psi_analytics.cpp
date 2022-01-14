@@ -149,7 +149,6 @@ void PSIsharedpayload(const std::vector<std::uint64_t> inputs, std::vector<std::
   // communicate element number
   uint64_t myneles = inputs.size();
   uint64_t herneles = 0;
-  cout << "PSIsharedpayload: start EstablishConnection " << endl;
   std::unique_ptr<CSocket> sock = EstablishConnection(context.address, context.port, static_cast<e_role>(context.role));
   if (context.role == SERVER) {
     sock->Send(&myneles, sizeof(myneles));
@@ -164,10 +163,9 @@ void PSIsharedpayload(const std::vector<std::uint64_t> inputs, std::vector<std::
   context.comm_cost += sock->getSndCnt() + + sock->getRcvCnt();
   sock->Close();
   uint64_t weightlen = weights[0].size();
-  // cout << "PSIsharedpayload: myneles=" << myneles << " herneles=" << herneles << " weightlen=" << weightlen << endl;
+  // cout << myneles << ' ' << herneles << ' ' << weightlen << endl;
 
   // update context info
-  cout << "PSIsharedpayload: update context info " << endl;
   context.neles = myneles;
   context.notherpartyselems = herneles;
   const std::size_t client_neles = std::max(context.neles, context.notherpartyselems);
@@ -200,11 +198,9 @@ void PSIsharedpayload(const std::vector<std::uint64_t> inputs, std::vector<std::
   PsiAnalyticsContext invrolecontext = context;
   if (context.role == SERVER) {
     invrolecontext.role = CLIENT;
-    // cout << "context.role == SERVER" << endl;
     OEPClient(extendedWeights, z1, invrolecontext, S_ARITH);
   } else {
     invrolecontext.role = SERVER;
-    // cout << "context.role == CLIENT" << endl;
     OEPServer(rp1, z1, invrolecontext, S_ARITH);
     for (uint32_t i=0; i<extendedSharedSize; ++i) {
       for (uint32_t j=0; j<weightlen; ++j) {
@@ -223,7 +219,7 @@ void PSIsharedpayload(const std::vector<std::uint64_t> inputs, std::vector<std::
       tempweights[i][0] = 0;
     }
   }
-  cout << "PSIsharedpayload psi round" << endl;
+  // cout << "psi round" << endl;
   // for (uint32_t i=0; i<inputs.size(); ++i) {
   //   cout << inputs[i] << ' ' << tempweights[i][0] << endl;
   // }
@@ -260,7 +256,7 @@ void PSIsharedpayload(const std::vector<std::uint64_t> inputs, std::vector<std::
   context.comm_cost += socko->getSndCnt() + socko->getRcvCnt();
   socko->Close();
 
-  // cout << "PSIsharedpayload ki " << endl;
+  // cout << "ki " << endl;
   // for (uint32_t i=0; i<context.nbins; ++i) {
   //   cout << ki[i] << ' ';
   // }
@@ -1285,10 +1281,8 @@ std::unique_ptr<CSocket> EstablishConnection(const std::string &address, uint16_
                                              e_role role) {
   std::unique_ptr<CSocket> socket;
   if (role == SERVER) {
-    std::cout << "EstablishConnection: role == SERVER, Listen 0.0.0.0:" << port << std::endl;
     socket = Listen("0.0.0.0", port);
   } else {
-    std::cout << "EstablishConnection: role == CLIENT, Connect " << address.c_str() << ":" << port << std::endl;
     socket = Connect(address.c_str(), port);
   }
   assert(socket);
